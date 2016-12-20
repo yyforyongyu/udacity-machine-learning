@@ -67,7 +67,7 @@ class LearningAgent(Agent):
         
         # ('right', {'light': 'green', 'oncoming': None, 'right': None, 'left': 'forward'})
         state = [waypoint]
-        state.extend(inputs.values()) # will dictionary preserve orders when calling .values()?
+        state.extend(inputs.values())
 
         return tuple(state)
 
@@ -83,6 +83,8 @@ class LearningAgent(Agent):
         q_values = self.Q[state]
         max_action = max(q_values, key=q_values.get)
 
+        # if max q value is returned, choose_action will have to access self.Q again
+        # to get the key, then why would we return a value, but not key here?
         return max_action
 
 
@@ -95,9 +97,8 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-
-        if state not in self.Q:
-            self.Q[state] = dict(zip(self.valid_actions, [0, 0, 0, 0]))
+        if (self.learning) and (state not in self.Q):
+            self.Q[state] = {action: 0 for action in self.valid_actions}
 
         return
 
@@ -116,10 +117,11 @@ class LearningAgent(Agent):
         # When not learning, choose a random action
         # When learning, choose a random action with 'epsilon' probability
         #   Otherwise, choose an action with the highest Q-value for the current state
-        if random.random() < self.epsilon:
+        if random.random() < self.epsilon or not self.learning:
             action = random.choice(self.valid_actions)
         else:
             action = self.get_maxQ(state)
+
         return action
 
 
@@ -133,8 +135,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        self.Q[state][action] = reward
-
+        if self.learning:
+            self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * reward
         return
 
 
