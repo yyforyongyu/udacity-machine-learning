@@ -11752,7 +11752,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Machine-Learning-Engineer-Nanodegree">Machine Learning Engineer Nanodegree<a class="anchor-link" href="#Machine-Learning-Engineer-Nanodegree">&#182;</a></h1><h2 id="Capstone-Proposal">Capstone Proposal<a class="anchor-link" href="#Capstone-Proposal">&#182;</a></h2><p>Yong Yu
-March 11st, 2017</p>
+April 9th, 2017</p>
 
 </div>
 </div>
@@ -11774,8 +11774,8 @@ March 11st, 2017</p>
 <h3 id="Domain-Background">Domain Background<a class="anchor-link" href="#Domain-Background">&#182;</a></h3><p>Bitcoin has became one of the hottest topic in main stream slowly ever since <a href="https://en.wikipedia.org/wiki/Silk_Road_(marketplace">silk road</a> was shut down by FBI. If you haven't heard of it, <a href="https://en.wikipedia.org/wiki/Bitcoin">you can check it here</a>. In short, you can think Bitcoin as a distributed currency system, although it is behaving more like an investment today as more and more people are trading instead of using them. It was 2013 when I first heard about Bitcoin, and ever since then I became an enthusiast about its future. I also bought my first Bitcoin when I first heard about it, and started my trading bitcoins ever since. After studying about machine learning, I think it would be interesting to apply it into trading bitcoin, and see if I could beat the market.</p>
 <p>In 2014, <a href="https://arxiv.org/pdf/1410.1231v1.pdf">a group of researchers from MIT</a> claimed that they doubled their bitcoin investment using a Bayseian regression model. Same year, <a href="http://cs229.stanford.edu/proj2014/Isaac%20Madan,%20Shaurya%20Saluja,%20Aojia%20Zhao,Automated%20Bitcoin%20Trading%20via%20Machine%20Learning%20Algorithms.pdf">researchers from Stanford</a> 
 extended this experiment with more training features and three algorithms, GML, SVM and Random Forest,
-to find out that Random Forest worked the best with a ten minutes interval, resulted in an accuracy score of 0.574. 
-My goal in this report is to examine their methods and see if I could reproduce their results.</p>
+to find out that Random Forest worked the best with a ten minutes interval, resulted in an accuracy score of 0.574.</p>
+<p>My goal in this report is to examine their methods and see if I could predict the trends of the price movement.</p>
 
 </div>
 </div>
@@ -11785,7 +11785,9 @@ My goal in this report is to examine their methods and see if I could reproduce 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Problem-Statement">Problem Statement<a class="anchor-link" href="#Problem-Statement">&#182;</a></h3><p>The problem here I am trying to solve is to predict bitcoin's price over a given time window, which could be days, hours, minutes, or seconds. In specific, I want to build three models to predict bitcoin's price with an accuracy over 50%, each has a time window of 60 minutes, 30 minutes, and 10 minutes. Several common machine learning algorithms applied in trading will be experimented to find out the best one. The current choices are GLM, SVM, Random Forest, and RNN.</p>
+<h3 id="Problem-Statement">Problem Statement<a class="anchor-link" href="#Problem-Statement">&#182;</a></h3><p>The problem here I am trying to solve is to predict the trends of bitcoin's price over a given time window, which could be days, hours, minutes, or seconds.</p>
+<p>In specific, the trends will be price going up or down, comparing to the price with a given time window ago. The time windows I will use here are 10 minutes, 30 minutes, and 60 minutes.</p>
+<p>So the classification problem can be precisely defined as, <strong>to predict the price will go up or go down in the next 10, 30, and 60 minutes.</strong></p>
 
 </div>
 </div>
@@ -11814,7 +11816,7 @@ My goal in this report is to examine their methods and see if I could reproduce 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Solution-Statement">Solution Statement<a class="anchor-link" href="#Solution-Statement">&#182;</a></h3><p>To best predict the price of bitcoin, four different machine leanring algorithms will be explored in this project,</p>
+<h3 id="Solution-Statement">Solution Statement<a class="anchor-link" href="#Solution-Statement">&#182;</a></h3><p>To best predict the price movement of bitcoin, four different machine leanring algorithms will be explored in this project,</p>
 <ul>
 <li>GLM, generalized linear model;</li>
 <li>SVM, support vector machine;</li>
@@ -11913,6 +11915,14 @@ $$accuracy = \frac {number\ of\ correctly\ predicted\ labels}{total\ number\ of\
 <li>find the best performance one using accuracy score;</li>
 </ul>
 <p>After all the models being trained and testes, we can then choose the best one as our final model.</p>
+<p>In addition to the workflow above, the following libraries will be used,</p>
+<ul>
+<li>sklearn;</li>
+<li>tensorflow;</li>
+<li>numpy;</li>
+<li>pymongo;</li>
+</ul>
+<p>All the data will saved in a MongoDB database.</p>
 
 </div>
 </div>
